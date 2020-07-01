@@ -28,7 +28,7 @@ http.createServer((request, reponse) => {
 });
 
 reponse.writeHead(200,{'Contnet-Type':'text.html'});
-reponse.write(datat);
+reponse.write(data);
 reponse.end();
     });
 
