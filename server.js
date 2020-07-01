@@ -1,7 +1,8 @@
 const http = require('http'),
-url = require('url');
+url = require('url'),
+fs = require ('fs)')
 
-http.createServe((request, reponse) => {
+http.createServer((request, reponse) => {
     let adrr = request.url,
     q =  url.parse(adrr, true),
     filePath = '';
@@ -12,6 +13,11 @@ http.createServe((request, reponse) => {
         filPath = 'index.html';
     }
 
+    fs.readFile(filePath, (err, data) => {
+        if (err) {
+        throw err;
+        }
+
  fs.appendFile('log.txt', 'URL: ' + addr + '\nTimestamp: ' + new Date() + '\n\n', (err) => {
     if (err) {
         console.log(err);
@@ -20,6 +26,11 @@ http.createServe((request, reponse) => {
     }
 
 });
-    
+
+reponse.writeHead(200,{'Contnet-Type':'text.html'});
+reponse.write(datat);
+reponse.end();
+    });
+
 
 }).listen(8080)
