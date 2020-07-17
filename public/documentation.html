@@ -1,6 +1,154 @@
-myFlix API <br> <br>
-
-To build the server­side component of a “movies” web application. The web application will
-provide users with access to information about different movies, directors, and genres. Users
-will be able to sign up, update their personal information, and create a list of their favorite
-movies.
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--  <link rel="favicon icon" href="img/favicon-16x16.png">-->
+    <title>My Flix</title>
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+  </head>
+<body>
+  <div>
+    <h1>Documentation</h1>
+    <P>My Flix is a web application in which users can search for and
+      save information about movies (different movies, directors and genres).
+      Users will be able to sign up, update their personal information and
+      create a list of their favorite movies.
+    </p>
+    <table class="requests-table" style="width: 1000px">
+      <caption> Web server documentation - REST API Movie and User requests </caption>
+      <br>
+    <thead>
+      <tr class="headers">
+        <th scope="col">REQUEST - Business Logic</th>
+        <th scope="col">URL</th>
+        <th scope="col">HTTP Method</th>
+        <th scope="col">Request Data Format</th>
+        <th scope="col">Response Data Body Format</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td scope="row">Return a list of All movies to the user </td>
+        <td> /movies</td>
+        <td style="color: #c7254e">GET </td>
+        <td> None </td>
+        <td> A JSON object holding data about all movies</td>
+      </tr>
+      <tr>
+        <td scope="row">Return data (date, genre, director, Image url, whether it's featured or not) about a single movie by title to the user…</td>
+        <td> /movies/[Title] </td>
+        <td style="color: #c7254e"> GET </td>
+        <td> None </td>
+        <td> A JSON object holding data about a single movie, containing an ID, title, and some other properties. Example:
+          <p style="color: #008800">
+              {
+                  title: "The Godfather",<br>
+                  date: "1972",<br>
+                  genre: "Gangsters",<br>
+                  director: "Francis Ford Coppola",<br>
+                  imagePath: "",<br>
+                  Featured: true<br>
+                }
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td scope="row">Return data about a genres (description) by movie title.</td>
+        <td> movies/Genre/[Title]</td>
+        <td style="color: #c7254e"> GET </td>
+        <td> None</td>
+        <td> A JSON object holding data about a genre (descriptio) by name or title.</td>
+      </tr>
+      <tr>
+        <td scope="row">Return data about a director (bio, birth year, death year) by name </td>
+        <td> /movies/Director/[Name]</td>
+        <td style="color: #c7254e"> GET </td>
+        <td> None</td>
+        <td>A JSON object holding data about a single director, containing name, birth year, death year, movies. Example:
+          <p style="color: #008800">
+            { <br>
+                name: "Francis Ford Coppola",<br>
+                bio: " Francis Ford Coppola, born April 7, 1939 is an American retired film director, producer, screenwriter, and film composer... "
+                Birth "1939",<br>
+                death: "",<br>
+                }
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td scope="row">Allow new users to register</td>
+        <td>/users</td>
+        <td style="color: #c7254e"> POST </td>
+        <td> A JSON object holding data about the new user to register/add, structured like:
+          <p style="color: #008800">
+            {<br>
+              Username : "Clément Froehlich,<br>
+              Password : "pumpthejam",<br>
+              Email : "pompelop@gmail.com",<br>
+              Birthday : "1991-04-12"<br>
+              }
+        </td>
+        <td> A JSON object holding data about the new user to register plus ID, structured like:
+          <p style="color: #008800">
+            { <br>
+              _id : "5ea31bfbf584f408956d506d",<br>
+              Username : "Clemfrl",<br>
+              Password : "pumpthejam",<br>
+              Email : "pompelop@gmail.com",<br>
+              Birthday : "1991-04-12T00:00:00.000Z,<br>
+            }</td>
+      </tr>
+      <tr>
+        <td scope="row">Allow users to update their user info (username, password, email, date of birth) </td>
+        <td> /users/[Username]</td>
+        <td style="color: #c7254e"> PUT </td>
+        <td>A JSON object holding data about the current user to update, structured like:
+          <p style="color: #008800">
+            {<br>
+              "Username" : "Clemfrl",<br>
+              "Password" : "pumpthejam",<br>
+              "Email" : "pompelop@gmail.com",<br>
+              "Birthday" : "1991-04-12",<br>
+              "Favorites" : ["movie_id"]
+            }
+          </p>
+        </td>
+        <td>A text message indicating whether the user's account has succesfully changed.
+</td>
+      </tr>
+      <tr>
+        <td scope="row"> Allow users to add a movie to their list of favorites</td>
+        <td> /users/[Username]/ Favorites/[movie_id]</td>
+        <td style="color: #c7254e"> POST </td>
+        <td> A JSON object holding data about the movie to add to the user's list of favorite movies, structured like:
+          <p style="color: #008800">
+            {<br>
+                "_id": "5e9c54713060a1071e806910,<br>
+                "Username": "Mandy Mugwort,<br>
+                "Password": "miaQu0hi4",<br>
+                "Email": "MandyMugwort@rhyta.com",<br>
+                "Birthday": "1975-03-01",<br>
+                "favorites": [ " "] <br>
+              }
+            </td>
+            <td> A text message indicating whether the user's favorite movie was succesfully added to their list.</td>
+      </tr>
+      <tr>
+        <td scope="row"> Allow users to remove a movie to their list of favorites</td>
+        <td> /users/[Username]/Favorites/[movie_id]</td>
+        <td style="color: #c7254e"> DELETE </td>
+        <td> None</td>
+        <td> A text message indicating whether the movie was succesfully removed from the users' favorite-list.</td>
+      </tr>
+      <tr>
+        <td scope="row"> Allow existing users to deregister
+(remove a user by Username or id) </td>
+        <td> /users/[Username]/</td>
+        <td style="color: #c7254e"> DELETE </td>
+        <td> None</td>
+        <td> A text message indicating whether the user's account was succesfully removed.</td>
+      </tr>
+  </div>
+</body>
+</html>
