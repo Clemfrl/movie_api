@@ -38,7 +38,7 @@ let genres = []
 
 // GET requests
 
-// Gets the list of data about ALL students
+// Gets the list of data about ALL movies
 app.get('/movies', (req, res) => {
   res.json(movies);
 });
@@ -60,7 +60,7 @@ app.get('/movies/genres/:title', (req, res) => {
 app.get('/movies/directors/:name')
 res.json(directors.find((director) =>
    { return director.name === req.params.name }));
-});
+
 
 
 // Allow new users to register
@@ -78,7 +78,7 @@ app.post('/users', (req, res) => {
 });
 
 // Update informations of a User (username, password, email, date of birth)
-app.put('/users/:Username', (req, res) => {}
+app.put('/users/:Username'), (req, res) => {}
 
 
 // Allow users to add a movie to their list of favorites
@@ -96,7 +96,7 @@ app.delete('/users/[Username]'), (req, res) => {
     users = users.filter((obj) => { return obj.Username !== req.params.Username });
     res.status(201).send('Your account is deleted');
   }
-});
+};
 
 
 
