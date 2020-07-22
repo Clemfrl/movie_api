@@ -57,10 +57,10 @@ app.get('/movies/genres/:title', (req, res) => {
 
 
 // Gets data about a director, by name
-app.get('/movies/directors/:name')
-res.json(directors.find((director) =>
-   { return director.name === req.params.name }));
-
+app.get('/movies/directors/:name', (req, res) => {
+  res.json(directors.find((director) =>
+  { return director.name === req.params.name }));
+  });
 
 
 // Allow new users to register
