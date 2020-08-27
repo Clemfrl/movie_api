@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 });
 
 // gets the full list of movies
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.find()
         .then((movies) => {
             res.status(201).json(movies);
@@ -73,17 +73,9 @@ app.get('/movies/directors/:Name', (req, res) => {
         });
 });
 
-// Requests from exercise 2.8
 
 //Add a user
-/* We’ll expect JSON in this format
-{
-ID: Integer,
-Username: String,
-Password: String,
-Email: String,
-Birthday: Date
-}*/
+
 app.post('/users', (req, res) => {
     Users.findOne({ Username: req.body.Username })
         .then((user) => {
@@ -111,16 +103,7 @@ app.post('/users', (req, res) => {
 });
 
 // Update a user's info, by username
-/* We’ll expect JSON in this format
-{
-Username: String,
-(required)
-Password: String,
-(required)
-Email: String,
-(required)
-Birthday: Date
-}*/
+
 app.put('/users/:Username', (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, {
         $set:
@@ -158,6 +141,44 @@ app.post('/users/:Username/Movies/:MovieID', (req, res) => {
         });
 });
 
+// Remove a movie from user's list of favorites
+
+app.delete('/users/:Username/Movies/:MovieID', (req, res) => {
+    Users.findOneAndUpdate(
+        { Username: req.params.Username },
+        {
+            $pull: { FavoriteMovies: req.params.MovieID }
+        },
+        { new: true }, // This line makes sure that the updated document is returned
+        (err, updatedUser) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send("Error: " + err);
+            } else {
+                res.json(updatedUser);
+            }
+        });
+});
+
+// Delete a user by username
+
+app.delete('/users/:Username', (req, res) => {
+    Users.findOneAndRemove({ Username: req.params.Username })
+        .then((user) => {
+            if (!user) {
+                res.status(400).send(req.params.Username + " was not found");
+            } else {
+                res.status(200).send(req.params.Username + " was deleted.");
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send("Error: " + err);
+        });
+}
+);
+
+
 // Requests from the exercise 2.5
 
 // Get all users
@@ -184,21 +205,7 @@ app.get('/users/:Username', (req, res) => {
         });
 });
 
-// Allow users to add a movie to their list of favorites
-app.post('/users/[Username]/Favorites/[movie_id]'), (req, res) => { }
 
-// Allow users to remove a movie to their list of favorites
-app.delete('/users/[Username]/Favorites/[movie_id]'), (req, res) => { }
-
-// Allow existing users to deregister
-app.delete('/users/[Username]'), (req, res) => {
-    let user = users.find((user) => { return student.Username === req.params.Username });
-
-    if (user) {
-        users = users.filter((obj) => { return obj.Username !== req.params.Username });
-        res.status(201).send('Your account is deleted');
-    }
-};
 
 app.get('/documentation', (req, res) => {
     res.sendFile('public/documentation.html', { root: __dirname });
