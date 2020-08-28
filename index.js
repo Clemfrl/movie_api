@@ -25,6 +25,9 @@ app.get('/', (req, res) => {
     res.status(201).send('Welcome to movie API');
 });
 
+
+// MOVIES ENDPOINTS
+
 // gets the full list of movies
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.find()
@@ -74,8 +77,34 @@ app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false
 });
 
 
-//Add a user
+// USERS ENDPOINTS
 
+// Get all users
+app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
+    Users.find()
+        .then((users) => {
+            res.status(201).json(users);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
+
+// Get a user by username
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+    Users.findOne({ Username: req.params.Username })
+        .then((user) => {
+            res.json(user);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
+
+
+//Add a user
 app.post('/users', (req, res) => {
     Users.findOne({ Username: req.body.Username })
         .then((user) => {
@@ -102,8 +131,8 @@ app.post('/users', (req, res) => {
         });
 });
 
-// Update a user's info, by username
 
+// Update a user's info, by username
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, {
         $set:
@@ -125,6 +154,7 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (r
         });
 });
 
+
 // Add a movie to a user's list of favorites
 app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, {
@@ -141,8 +171,8 @@ app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { sess
         });
 });
 
-// Remove a movie from user's list of favorites
 
+// Remove a movie from user's list of favorites
 app.delete('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndUpdate(
         { Username: req.params.Username },
@@ -160,8 +190,8 @@ app.delete('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { se
         });
 });
 
-// Delete a user by username
 
+// Delete a user by username
 app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username })
         .then((user) => {
@@ -175,35 +205,8 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
             console.error(err);
             res.status(500).send("Error: " + err);
         });
-}
-);
-
-
-// Requests from the exercise 2.5
-
-// Get all users
-app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
-    Users.find()
-        .then((users) => {
-            res.status(201).json(users);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).send('Error: ' + err);
-        });
 });
 
-// Get a user by username
-app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
-    Users.findOne({ Username: req.params.Username })
-        .then((user) => {
-            res.json(user);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).send('Error: ' + err);
-        });
-});
 
 
 
