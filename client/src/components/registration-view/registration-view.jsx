@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 export function RegistrationView() {
   const [username, setUsername] = useState("");
@@ -9,26 +8,7 @@ export function RegistrationView() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const createdUser = {
-      Username: username,
-      Password: password,
-      Email: email,
-      Birthday: dob,
-    };
-
-    axios
-      .post("https://clemflixdb.herokuapp.com/users", createdUser)
-      .then((response) => {
-        console.log(response);
-        console.log(response.data);
-        alert("User created successfully");
-        window.open("/client", "_self");
-      })
-      .catch((e) => {
-        console.log(e.reponse);
-        alert("Error processing request");
-      });
+    console.log(username, password);
   };
 
   return (

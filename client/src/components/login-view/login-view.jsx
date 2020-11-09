@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import propTypes from "prop-types";
+import { Form, Button } from "react-bootstrap";
+import "./login-view.scss";
+import logo from "../../images/myFlix.png";
 
 export function LoginView(props) {
   const [username, setUsername] = useState("");
@@ -12,27 +15,34 @@ export function LoginView(props) {
   };
 
   return (
-    <form>
-      <label>
-        Username:
-        <input
-          type="text"
+    <Form className="login-form">
+      <img src={logo} alt="logo" style={{ width: "300px" }} />
+      <Form.Group controlId="formBasicUsername">
+        <Form.Label>Username</Form.Label>
+        <Form.Control
+          type="username"
+          placeholder="Enter Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-      </label>
-      <label>
-        Password:
-        <input
+      </Form.Group>
+      <Form.Group controlId="formBasicPassword">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
           type="password"
+          placeholder="Enter Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-      </label>
-      <button type="button" onClick={handleSubmit}>
-        Submit
-      </button>
-    </form>
+      </Form.Group>
+      <Button
+        variant="btn-lg btn-dark btn-block"
+        type="submit"
+        onClick={handleSubmit}
+      >
+        Login
+      </Button>
+    </Form>
   );
 }
 
