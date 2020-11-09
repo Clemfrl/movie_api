@@ -46339,9 +46339,11 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
       var _this$props = this.props,
           movie = _this$props.movie,
           _onClick = _this$props.onClick;
-      return _react.default.createElement(_Card.default, {
+      return _react.default.createElement("div", {
+        className: "col-10 col-lg-3 ml-5 mt-5"
+      }, _react.default.createElement(_Card.default, {
         style: {
-          width: "16rem"
+          width: "20rem"
         }
       }, _react.default.createElement(_Card.default.Img, {
         variant: "top",
@@ -46351,7 +46353,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
           return _onClick(movie);
         },
         variant: "link"
-      }, "Open")));
+      }, "Open"))));
     }
   }]);
 

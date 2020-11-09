@@ -11,16 +11,18 @@ export class MovieCard extends React.Component {
     const { movie, onClick } = this.props;
 
     return (
-      <Card style={{ width: "16rem" }}>
-        <Card.Img variant="top" src={movie.ImagePath} />
-        <Card.Body>
-          <Card.Title>{movie.Title}</Card.Title>
-          <Card.Text>{movie.Description}</Card.Text>
-          <Button onClick={() => onClick(movie)} variant="link">
-            Open
-          </Button>
-        </Card.Body>
-      </Card>
+      <div className="col-10 col-lg-3 ml-5 mt-5">
+        <Card style={{ width: "20rem" }}>
+          <Card.Img variant="top" src={movie.ImagePath} />
+          <Card.Body>
+            <Card.Title>{movie.Title}</Card.Title>
+            <Card.Text>{movie.Description}</Card.Text>
+            <Button onClick={() => onClick(movie)} variant="link">
+              Open
+            </Button>
+          </Card.Body>
+        </Card>
+      </div>
     );
   }
 }
