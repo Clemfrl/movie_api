@@ -87,9 +87,9 @@ export class MainView extends React.Component {
 
     return (
       <div className="main-view">
-        {selectedMovie && (
+        {/* {selectedMovie && (
           <button onClick={() => this.onBackButtonClick()}>Back</button>
-        )}
+        )} */}
         {activeView}
       </div>
     );
