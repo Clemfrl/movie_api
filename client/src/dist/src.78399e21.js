@@ -46633,6 +46633,7 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+// import axios from "axios";
 function LoginView(props) {
   var _useState = (0, _react.useState)(""),
       _useState2 = _slicedToArray(_useState, 2),
@@ -46647,7 +46648,18 @@ function LoginView(props) {
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
     console.log(username, password);
-    props.onLoggedIn(username);
+    props.onLoggedIn(username); // axios
+    //   .post("http://clemflixdb.herokuapp.com/login", {
+    //     Username: username,
+    //     Password: password,
+    //   })
+    //   .then((reponse) => {
+    //     const data = reponse.data;
+    //     props.onLoggedIn(data);
+    //   })
+    //   .catch((e) => {
+    //     console.log("no such user");
+    //   });
   };
 
   return _react.default.createElement(_reactBootstrap.Form, {
@@ -46843,9 +46855,9 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
       }, _react.default.createElement(_Card.default.Img, {
         variant: "top",
         src: movie.ImagePath
-      }), _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_Card.default.Title, null, movie.Title), _react.default.createElement(_Card.default.Text, null, "Description: ", movie.Description), _react.default.createElement(_Card.default.Text, null, "Genre: ", movie.Genre.Name), _react.default.createElement(_Card.default.Text, null, "Director: ", movie.Director.Name), _react.default.createElement(_Card.default.Text, null, "Director Bio: ", movie.Director.Bio), _react.default.createElement(_Button.default, {
-        variant: "link"
-      }, "Back"))));
+      }), _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_Card.default.Title, null, movie.Title), _react.default.createElement(_Card.default.Text, null, "Description: ", movie.Description), _react.default.createElement(_Card.default.Text, null, "Genre: ", movie.Genre.Name), _react.default.createElement(_Card.default.Text, null, "Director: ", movie.Director.Name), _react.default.createElement(_Button.default, {
+        to: "/"
+      }, _react.default.createElement(_Button.default, null, "Back")))));
     }
   }]);
 
@@ -46853,6 +46865,19 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 exports.MovieView = MovieView;
+MovieView.propTypes = {
+  movie: _propTypes.default.shape({
+    Title: _propTypes.default.string.isRequired,
+    Description: _propTypes.default.string.isRequired,
+    ImagePath: _propTypes.default.string.isRequired,
+    Genre: _propTypes.default.shape({
+      Name: _propTypes.default.string.isRequired
+    }),
+    Director: _propTypes.default.shape({
+      Name: _propTypes.default.string.isRequired
+    })
+  }).isRequired
+};
 },{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 
@@ -47000,11 +47025,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
       return _react.default.createElement("div", {
         className: "main-view"
-      }, selectedMovie && _react.default.createElement("button", {
-        onClick: function onClick() {
-          return _this3.onBackButtonClick();
-        }
-      }, "Back"), activeView);
+      }, activeView);
     }
   }]);
 
@@ -47106,7 +47127,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55664" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59704" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
