@@ -3,7 +3,7 @@ import propTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
 import "./login-view.scss";
 import logo from "../../images/myFlix.png";
-// import axios from "axios";
+import axios from "axios";
 
 export function LoginView(props) {
   const [username, setUsername] = useState("");
@@ -12,19 +12,19 @@ export function LoginView(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(username, password);
-    props.onLoggedIn(username);
-    // axios
-    //   .post("http://clemflixdb.herokuapp.com/login", {
-    //     Username: username,
-    //     Password: password,
-    //   })
-    //   .then((reponse) => {
-    //     const data = reponse.data;
-    //     props.onLoggedIn(data);
-    //   })
-    //   .catch((e) => {
-    //     console.log("no such user");
-    //   });
+    // props.onLoggedIn(username);
+    axios
+      .post("http://clemflixdb.herokuapp.com/login", {
+        Username: username,
+        Password: password,
+      })
+      .then((reponse) => {
+        const data = reponse.data;
+        props.onLoggedIn(data);
+      })
+      .catch((e) => {
+        console.log("no such user");
+      });
   };
 
   return (
