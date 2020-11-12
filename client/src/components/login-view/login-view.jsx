@@ -55,6 +55,10 @@ export function LoginView(props) {
       >
         Login
       </Button>
+      <div className="registration">Not registered yet ?</div>
+      <Button className="RegisterButton" variant="dark" size="sm">
+        Register here
+      </Button>
     </Form>
   );
 }
