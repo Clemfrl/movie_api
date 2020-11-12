@@ -82,16 +82,14 @@ export class MainView extends React.Component {
       console.log(
         "render: There is a selected movie, rendering movie view with detailed information"
       );
-      activeView = <MovieView movie={selectedMovie} />;
+      activeView = (
+        <MovieView
+          movie={selectedMovie}
+          onBackButtonClick={() => this.onBackButtonClick()}
+        />
+      );
     }
 
-    return (
-      <div className="main-view">
-        {/* {selectedMovie && (
-          <button onClick={() => this.onBackButtonClick()}>Back</button>
-        )} */}
-        {activeView}
-      </div>
-    );
+    return <div className="main-view">{activeView}</div>;
   }
 }
