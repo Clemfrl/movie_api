@@ -29,7 +29,7 @@ export function RegistrationView() {
         console.log(data);
         window.open("/client", "_self");
       })
-      .catch((e) => {
+      .catch(() => {
         console.log("error registering the user");
       });
   };

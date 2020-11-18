@@ -2,9 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
+import { Link } from "react-router-dom";
 
 export class MovieView extends React.Component {
   constructor() {
@@ -14,7 +12,7 @@ export class MovieView extends React.Component {
   }
 
   render() {
-    const { movie, onBackButtonClick } = this.props;
+    const { movie } = this.props;
 
     if (!movie) return null;
 
@@ -29,8 +27,9 @@ export class MovieView extends React.Component {
                 <Card.Text>Description: {movie.Description}</Card.Text>
                 <Card.Text>Genre: {movie.Genre.Name}</Card.Text>
                 <Card.Text>Director: {movie.Director.Name}</Card.Text>
-
-                <Button onClick={() => onBackButtonClick(movie)}>Back</Button>
+                <Link to={`/`}>
+                  <Button variant="link">Back</Button>
+                </Link>
               </Card.Body>
             </Card>
           </div>
@@ -53,6 +52,5 @@ MovieView.propTypes = {
     Director: PropTypes.shape({
       Name: PropTypes.string.isRequired,
     }),
-  }).isRequired,
-  onBackButtonClick: PropTypes.func.isRequired,
+  }),
 };
