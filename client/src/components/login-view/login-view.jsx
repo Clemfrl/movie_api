@@ -4,6 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import "./login-view.scss";
 import logo from "../../images/myFlix.png";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export function LoginView(props) {
   const [username, setUsername] = useState("");
@@ -56,9 +57,11 @@ export function LoginView(props) {
         Login
       </Button>
       <div className="registration">Not registered yet ?</div>
-      <Button className="RegisterButton" variant="dark" size="sm">
-        Register here
-      </Button>
+      <Link to={`/register`}>
+        <Button variant="link" className="registerButton" type="submit">
+          Sign Up
+        </Button>
+      </Link>
     </Form>
   );
 }

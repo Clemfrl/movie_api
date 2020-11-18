@@ -9,21 +9,19 @@ export function RegistrationView() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password);
-
-    const createdUser = {
-      Username: username,
-      Password: password,
-      Email: email,
-      Birthday: dob,
-    };
 
     axios
-      .post("http://clemflixdb.herokuapp.com/users", createdUser)
+      .post("https://chrisflix.herokuapp.com/users", {
+        Username: username,
+        Password: password,
+        Email: email,
+        Birthday: dob,
+      })
       .then((response) => {
         const data = response.data;
+        alert("Your account has been created! Please login");
         console.log(data);
-        window.open("/", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
+        window.open("/client", "_self");
       })
       .catch((e) => {
         console.log("error registering the user");
