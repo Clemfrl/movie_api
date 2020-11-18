@@ -11,8 +11,7 @@ export class MainView extends React.Component {
     super();
 
     this.state = {
-      movies: null,
-      selectedMovie: null,
+      movies: [],
       user: null,
     };
   }
@@ -80,41 +79,36 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, selectedMovie, user } = this.state;
-
-    if (!user)
-      return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+    const { movies, user } = this.state;
 
     // Before the movies have been loaded
-    if (!movies) {
-      console.log("render: There are no movies, showing loading screen");
-      return <div className="main-view">Loading movies...</div>;
-    } else {
-      console.log("render: There are movies, continuing");
-    }
+    if (!movies) return <div className="main-view" />;
 
-    let activeView = null;
-    if (!selectedMovie) {
-      console.log("render: There is no selected movie, rendering list");
-      activeView = movies.map((movie) => (
-        <MovieCard
-          key={movie._id}
-          movie={movie}
-          onClick={(movie) => this.onMovieClick(movie)}
-        />
-      ));
-    } else {
-      console.log(
-        "render: There is a selected movie, rendering movie view with detailed information"
-      );
-      activeView = (
-        <MovieView
-          movie={selectedMovie}
-          onBackButtonClick={() => this.onBackButtonClick()}
-        />
-      );
-    }
-
-    return <div className="main-view">{activeView}</div>;
+    return (
+      <Router>
+        <div className="main-view">
+          <Route
+            exact
+            path="/"
+            render={() => {
+              if (!user)
+                return (
+                  <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                );
+              return movies.map((m) => <MovieCard key={m._id} movie={m} />);
+            }}
+          />
+          <Route path="/register" render={() => <RegistrationView />} />
+          <Route
+            path="/movies/:movieId"
+            render={({ match }) => (
+              <MovieView
+                movie={movies.find((m) => m._id === match.params.movieId)}
+              />
+            )}
+          />
+        </div>
+      </Router>
+    );
   }
 }

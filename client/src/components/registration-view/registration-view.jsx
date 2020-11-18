@@ -21,14 +21,12 @@ export function RegistrationView() {
     axios
       .post("http://clemflixdb.herokuapp.com/users", createdUser)
       .then((response) => {
-        console.log(response);
-        console.log(response.data);
-        alert("User created successfully");
-        window.open("/client", "_self");
+        const data = response.data;
+        console.log(data);
+        window.open("/", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
       })
       .catch((e) => {
-        console.log(e.response);
-        alert("Error processing request");
+        console.log("error registering the user");
       });
   };
 
