@@ -17,11 +17,21 @@ export class MainView extends React.Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount: Fetching movies from API");
+    let accessToken = localStorage.getItem("token");
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem("user"),
+      });
+      this.getMovies(accessToken);
+    }
+  }
+
+  getMovies(token) {
     axios
-      .get("https://clemflixdb.herokuapp.com/movies")
+      .get("https://clemflixdb.herokuapp.com/movies", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => {
-        console.log("componentDidMount axios then: Setting movies as state");
         // Assign the result to the state
         this.setState({
           movies: response.data,
@@ -50,22 +60,6 @@ export class MainView extends React.Component {
     localStorage.setItem("token", authData.token);
     localStorage.setItem("user", authData.user.Username);
     this.getMovies(authData.token);
-  }
-
-  getMovies(token) {
-    axios
-      .get("https://clemflixdb.herokuapp.com/movies", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        // Assign the result to the state
-        this.setState({
-          movies: response.data,
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
   }
 
   onBackButtonClick() {
