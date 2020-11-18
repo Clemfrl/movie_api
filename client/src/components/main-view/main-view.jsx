@@ -86,7 +86,7 @@ export class MainView extends React.Component {
     if (!movies) return <div className="main-view" />;
 
     return (
-      <Router>
+      <Router basename="/client">
         <div className="main-view">
           <Route
             exact
@@ -108,6 +108,40 @@ export class MainView extends React.Component {
               />
             )}
           />
+          <Route
+            path="/movies/director/:name"
+            render={({ match }) => {
+              if (!movies) return <div className="main-view" />;
+              return (
+                <DirectorView
+                  director={
+                    movies.find((m) => m.Director.Name === match.params.name)
+                      .Director
+                  }
+                />
+              );
+            }}
+          />
+          <Route
+            path="/movies/genres/:name"
+            render={({ match }) => {
+              if (!movies) return <div className="main-view" />;
+              return (
+                <GenreView
+                  genre={
+                    movies.find((m) => m.Genre.Name === match.params.name).Genre
+                  }
+                />
+              );
+            }}
+          />
+          <Route
+            exact
+            path="/user"
+            render={() => <ProfileView movies={movies} />}
+          />
+          <Route path="/about" component={About} />
+          <Route path="/contact" component={Contact} />
         </div>
       </Router>
     );
