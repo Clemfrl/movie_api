@@ -1,6 +1,15 @@
 import React from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  Button,
+  Form,
+  FormControl,
+  Navbar,
+  Nav,
+  NavDropdown,
+} from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
@@ -90,6 +99,38 @@ export class MainView extends React.Component {
 
     return (
       <Router basename="/client">
+        <Navbar bg="light" expand="lg">
+          <Navbar.Brand as={Link} to="/">
+            myFlix
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
+              <Nav.Link as={Link} to="/">
+                Home
+              </Nav.Link>
+              <Nav.Link as={Link} to="/user">
+                Profile
+              </Nav.Link>
+
+              <Button size="sm" onClick={() => this.onLoggedOut()}>
+                <b>Log Out</b>
+              </Button>
+            </Nav>
+            <Form inline>
+              <FormControl
+                type="text"
+                placeholder="Search"
+                className="mr-sm-2"
+              />
+              <Button variant="outline-success">Search</Button>
+            </Form>
+          </Navbar.Collapse>
+        </Navbar>
+        <br></br>
+        <br></br>
+        <br></br>
+
         <div className="main-view">
           <Route
             exact
@@ -143,8 +184,6 @@ export class MainView extends React.Component {
             path="/users"
             render={() => <ProfileView movies={movies} />}
           />
-          {/* <Route path="/about" component={About} />
-          <Route path="/contact" component={Contact} /> */}
         </div>
       </Router>
     );
