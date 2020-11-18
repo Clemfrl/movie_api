@@ -6,6 +6,9 @@ import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { RegistrationView } from "../registration-view/registration-view";
+import { ProfileView } from "../profile-view/profile-view";
+import { DirectorView } from "../director-view/director-view";
+import { GenreView } from "../genre-view/genre-view";
 
 export class MainView extends React.Component {
   constructor() {
@@ -137,11 +140,11 @@ export class MainView extends React.Component {
           />
           <Route
             exact
-            path="/user"
+            path="/users"
             render={() => <ProfileView movies={movies} />}
           />
-          <Route path="/about" component={About} />
-          <Route path="/contact" component={Contact} />
+          {/* <Route path="/about" component={About} />
+          <Route path="/contact" component={Contact} /> */}
         </div>
       </Router>
     );
