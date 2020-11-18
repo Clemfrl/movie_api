@@ -17,16 +17,6 @@ export class MainView extends React.Component {
     };
   }
 
-  componentDidMount() {
-    let accessToken = localStorage.getItem("token");
-    if (accessToken !== null) {
-      this.setState({
-        user: localStorage.getItem("user"),
-      });
-      this.getMovies(accessToken);
-    }
-  }
-
   getMovies(token) {
     axios
       .get("https://clemflixdb.herokuapp.com/movies", {
@@ -43,13 +33,14 @@ export class MainView extends React.Component {
       });
   }
 
-  onMovieClick(movie) {
-    console.log(
-      `onMovieClick: Setting "${movie.Title}" as selectedMovie in state`
-    );
-    this.setState({
-      selectedMovie: movie,
-    });
+  componentDidMount() {
+    let accessToken = localStorage.getItem("token");
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem("user"),
+      });
+      this.getMovies(accessToken);
+    }
   }
 
   onLoggedIn(authData) {
@@ -70,6 +61,15 @@ export class MainView extends React.Component {
       user: null,
     });
     window.open("/", "_self");
+  }
+
+  onMovieClick(movie) {
+    console.log(
+      `onMovieClick: Setting "${movie.Title}" as selectedMovie in state`
+    );
+    this.setState({
+      selectedMovie: movie,
+    });
   }
 
   onBackButtonClick() {
