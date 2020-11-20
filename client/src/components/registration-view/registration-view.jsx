@@ -11,7 +11,7 @@ export function RegistrationView() {
   const [username, createUsername] = useState("");
   const [password, createPassword] = useState("");
   const [email, createEmail] = useState("");
-  const [dob, createDob] = useState("");
+  const [birthday, createDob] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ export function RegistrationView() {
         Username: username,
         Password: password,
         Email: email,
-        Birthday: dob,
+        Birthday: birthday,
       })
       .then((response) => {
         const data = response.data;
@@ -74,7 +74,7 @@ export function RegistrationView() {
           <Form.Control
             type="date"
             placeholder="12/31/1999"
-            value={dob}
+            value={birthday}
             onChange={(e) => createDob(e.target.value)}
           />
         </Form.Group>

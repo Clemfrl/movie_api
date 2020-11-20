@@ -109,7 +109,7 @@ export class MainView extends React.Component {
               <Nav.Link as={Link} to="/">
                 Home
               </Nav.Link>
-              <Nav.Link as={Link} to="/user">
+              <Nav.Link as={Link} to="/users">
                 Profile
               </Nav.Link>
 

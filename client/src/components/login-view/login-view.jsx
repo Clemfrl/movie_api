@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import propTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
 import "./login-view.scss";
-import logo from "../../images/myFlix.png";
+import logo from "../../images/myflix.png";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
