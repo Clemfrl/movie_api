@@ -17,7 +17,7 @@ export function RegistrationView() {
     e.preventDefault();
 
     axios
-      .post("https://chrisflix.herokuapp.com/users", {
+      .post("https://clemflixdb.herokuapp.com/users", {
         Username: username,
         Password: password,
         Email: email,
