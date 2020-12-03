@@ -1,16 +1,14 @@
 import React from "react";
 import axios from "axios";
+import { connect } from "react-redux";
+
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import {
-  Button,
-  Form,
-  FormControl,
-  Navbar,
-  Nav,
-  NavDropdown,
-} from "react-bootstrap";
+import { Button, Form, FormControl, Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import { setMovies, setUser } from "../../actions/actions";
+
+import MoviesList from "../movies-list/movies-list";
 import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
@@ -19,7 +17,7 @@ import { ProfileView } from "../profile-view/profile-view";
 import { DirectorView } from "../director-view/director-view";
 import { GenreView } from "../genre-view/genre-view";
 
-export class MainView extends React.Component {
+class MainView extends React.Component {
   constructor() {
     super();
 
@@ -35,10 +33,8 @@ export class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        // Assign the result to the state
-        this.setState({
-          movies: response.data,
-        });
+        // #1
+        this.props.setMovies(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -92,7 +88,8 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user } = this.state;
+    let { movies } = this.props;
+    let { user } = this.state;
 
     // Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
@@ -113,7 +110,7 @@ export class MainView extends React.Component {
                 Profile
               </Nav.Link>
 
-              <Button size="sm" onClick={() => this.onLoggedOut()}>
+              <Button variant="light" onClick={() => this.onLoggedOut()}>
                 <b>Log Out</b>
               </Button>
             </Nav>
@@ -123,7 +120,7 @@ export class MainView extends React.Component {
                 placeholder="Search"
                 className="mr-sm-2"
               />
-              <Button variant="outline-success">Search</Button>
+              <Button variant="outline-dark">Search</Button>
             </Form>
           </Navbar.Collapse>
         </Navbar>
@@ -189,3 +186,9 @@ export class MainView extends React.Component {
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return { movies: state.movies };
+};
+
+export default connect(mapStateToProps, { setMovies })(MainView);
