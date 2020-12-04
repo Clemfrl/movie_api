@@ -16,6 +16,7 @@ import { RegistrationView } from "../registration-view/registration-view";
 import { ProfileView } from "../profile-view/profile-view";
 import { DirectorView } from "../director-view/director-view";
 import { GenreView } from "../genre-view/genre-view";
+import { UpdateProfile } from "../update-profile/update-profile";
 
 class MainView extends React.Component {
   constructor() {
@@ -181,6 +182,7 @@ class MainView extends React.Component {
             path="/users"
             render={() => <ProfileView movies={movies} />}
           />
+          <Route path="/users/update" render={() => <UpdateProfile />} />
         </div>
       </Router>
     );
