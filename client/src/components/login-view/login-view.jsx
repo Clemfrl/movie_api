@@ -16,12 +16,15 @@ export function LoginView(props) {
     console.log(username, password);
     // props.onLoggedIn(username);
     axios
-      .post("http://clemflixdb.herokuapp.com/login", {
-        Username: username,
-        Password: password,
+      .post("http://clemflixdb.herokuapp.com/login", null, {
+        params: {
+          Username: username,
+          Password: password,
+        },
       })
       .then((reponse) => {
         const data = reponse.data;
+        console.log(data);
         props.onLoggedIn(data);
       })
       .catch(() => {
