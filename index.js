@@ -40,7 +40,13 @@ app.get(
   "/movies",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Movies.find()
+    let filter = null;
+    if (req.params.q) {
+      filter = {
+        Title: new RegExp(req.params.q, "i"),
+      };
+    }
+    Movies.find(filter)
       .then((movies) => {
         res.status(201).json(movies);
       })
