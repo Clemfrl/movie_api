@@ -171,16 +171,23 @@ app.post(
 
 // Update a user's info, by username
 app.put("/users/:Username", (req, res) => {
+  let changedFields = {};
+  if (req.body.Username) {
+    changedFields.Username = req.body.Username;
+  }
+  if (req.body.Email) {
+    changedFields.Email = req.body.Email;
+  }
+  if (req.body.Birthday) {
+    changedFields.Birthday = req.body.Birthday;
+  }
+  if (req.body.Password) {
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    changedFields.Password = hashedPassword;
+  }
   Users.findOneAndUpdate(
     { Username: req.params.Username },
-    {
-      $set: {
-        Username: req.body.Username,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        Birthday: req.body.Birthday,
-      },
-    },
+    { $set: changedFields },
     { new: true }, // This line makes sure that the updated document is returned
     (err, updatedUser) => {
       if (err) {
