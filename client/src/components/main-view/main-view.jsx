@@ -112,11 +112,12 @@ class MainView extends React.Component {
               <Nav.Link as={Link} to="/users">
                 Profile
               </Nav.Link>
-
-              <Button variant="light" onClick={() => this.onLoggedOut()}>
-                <b>Log Out</b>
-              </Button>
             </Nav>
+
+            <Button variant="light" onClick={() => this.onLoggedOut()}>
+              <b>Log Out</b>
+            </Button>
+
             <Form inline>
               <FormControl
                 type="text"
