@@ -22,10 +22,23 @@ import "./main-view.scss";
 const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [user, setUser] = useState(null);
+  const [searchTerms, setSearchTerms] = useState("");
+
+  useEffect(() => {
+    let accessToken = localStorage.getItem("token");
+    if (accessToken !== null) {
+      setUser(localStorage.getItem("user"));
+      getMovies(accessToken);
+    }
+  }, []);
 
   const getMovies = (token) => {
+    console.log("Getting movies", { searchTerms });
+    const queryString = new URLSearchParams({
+      q: searchTerms,
+    });
     axios
-      .get("https://clemflixdb.herokuapp.com/movies", {
+      .get(`https://clemflixdb.herokuapp.com/movies?${queryString}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -36,14 +49,6 @@ const MainView = () => {
         console.log(error);
       });
   };
-
-  useEffect(() => {
-    let accessToken = localStorage.getItem("token");
-    if (accessToken !== null) {
-      setUser(localStorage.getItem("user"));
-      getMovies(accessToken);
-    }
-  }, []);
 
   const onLoggedIn = (authData) => {
     console.log(authData);
@@ -61,6 +66,12 @@ const MainView = () => {
     window.open("/", "_self");
   };
 
+  const searchMovies = (event) => {
+    event.preventDefault();
+    let accessToken = localStorage.getItem("token");
+    getMovies(accessToken);
+  };
+
   // Before the movies have been loaded
   if (!movies) return <div className="main-view" />;
 
@@ -70,6 +81,16 @@ const MainView = () => {
         <Navbar.Brand as={Link} to="/">
           myFlix
         </Navbar.Brand>
+        <Form inline onSubmit={searchMovies}>
+          <FormControl
+            type="text"
+            placeholder="Search"
+            className="mr-sm-2"
+            value={searchTerms}
+            onChange={(e) => setSearchTerms(e.target.value)}
+          />
+          <Button variant="outline-dark">Search</Button>
+        </Form>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
@@ -84,11 +105,6 @@ const MainView = () => {
           <Button variant="light" onClick={onLoggedOut}>
             <b>Log Out</b>
           </Button>
-
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-dark">Search</Button>
-          </Form>
         </Navbar.Collapse>
       </Navbar>
       <br></br>
