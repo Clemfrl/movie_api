@@ -6,9 +6,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Button, Form, FormControl, Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import { setMovies, setUser } from "../../actions/actions";
+import { setMovies } from "../../actions/actions";
 
-import MoviesList from "../movies-list/movies-list";
 import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
