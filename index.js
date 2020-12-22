@@ -41,9 +41,11 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     let filter = null;
-    if (req.params.q) {
+    const q = req.query.q;
+    if (q) {
+      console.log(`Filtering movies by title="${q}"`);
       filter = {
-        Title: new RegExp(req.params.q, "i"),
+        Title: new RegExp(q, "i"),
       };
     }
     Movies.find(filter)
