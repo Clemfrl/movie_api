@@ -18,6 +18,8 @@ import { DirectorView } from "../director-view/director-view";
 import { GenreView } from "../genre-view/genre-view";
 import { UpdateProfile } from "../update-profile/update-profile";
 
+import "./main-view.scss";
+
 class MainView extends React.Component {
   constructor() {
     super();
