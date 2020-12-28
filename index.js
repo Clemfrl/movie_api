@@ -9,6 +9,7 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const passport = require("passport");
 require("./passport");
+const path = require("path");
 
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
@@ -26,6 +27,10 @@ app.use(cors());
 app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(express.static("public"));
+app.use("/client", express.static(path.join(__dirname, "client", "dist")));
+app.get("/client/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 
 let auth = require("./auth")(app);
 
